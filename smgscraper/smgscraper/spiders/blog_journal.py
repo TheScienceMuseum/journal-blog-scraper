@@ -10,7 +10,8 @@ class BlogSpider(scrapy.spiders.SitemapSpider):
     ]
 
     def parse_blogpost(self, response):
-        self.logger.info(f"Found {response.url}")
+        # self.logger.info(f"Found {response.url}")
+
         yield {
             "url": response.url,
             "author": response.css('h2.c-hero__subtitle a::text').get() or self._get_author_from_author_string(remove_tags(response.css('h2.c-hero__subtitle').get())),
@@ -64,7 +65,7 @@ class JournalSpider(scrapy.Spider):
         yield from response.follow_all(pagination_links, self.parse)
 
     def parse_article(self, response):
-        self.logger.info(f"Found {response.url}")
+        # self.logger.info(f"Found {response.url}")
 
         yield {
             "url": response.url,
