@@ -1,4 +1,6 @@
-.PHONY: clean
+.PHONY: all clean
+
+all: json csv
 
 json: ./output_data/blog.json ./output_data/journal.json
 
