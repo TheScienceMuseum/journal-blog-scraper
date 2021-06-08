@@ -76,7 +76,7 @@ class JournalSpider(scrapy.Spider):
             "keywords": self._get_keywords_from_article(response),
             "tags": [remove_tags(i).replace(r"\\r\\n", "").strip() for i in response.css('ul.tag-cloud li').getall()],
             # last element contains DOI
-            "text": remove_tags("\n".join(response.xpath('//div[@id="text-1"]/p').extract()[:-1])).encode('utf-8').decode("utf-8")
+            "text_by_paragraph": [remove_tags(i) for i in response.xpath('//div[@id="text-1"]/p').extract()][:-1]
         }
     
     @staticmethod
