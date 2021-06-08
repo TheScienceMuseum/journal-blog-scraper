@@ -10,18 +10,26 @@ class BlogSpider(scrapy.spiders.SitemapSpider):
     ]
 
     def parse_blogpost(self, response):
-        self.logger.info(f"Found {response.url}") # ... scrape product ...
+        self.logger.info(f"Found {response.url}")
         yield {
             "url": response.url,
-            "author": response.css('h2.c-hero__subtitle a::text').get() or self._get_author_from_author_string(response.css('h2.c-hero__subtitle::text').get()),
+            "author": response.css('h2.c-hero__subtitle a::text').get() or self._get_author_from_author_string(remove_tags(response.css('h2.c-hero__subtitle').get())),
+            "date": self._get_date_from_author_string(remove_tags(response.css('h2.c-hero__subtitle').get())),
             "title": response.css('h1::text').get(),
-            "caption": response.css('div.o-main__standfirst::text').get(),
+            "caption": self._get_caption_from_response(response),
             "categories": response.css('dl.o-dl dd a[rel="category tag"]::text').getall(),
             "tags": response.css('dl.o-dl dd a[rel="tag"]::text').getall(),
             "text_by_paragraph": [
                 self._get_text_from_paragraph(p) for p in response.css('div.o-textstyles p')
              ],
         }
+
+    @staticmethod
+    def _get_caption_from_response(response):
+        try:
+            return response.css('div.o-main__standfirst::text').get().strip()
+        except:
+            return None
 
     @staticmethod
     def _get_text_from_paragraph(p):
@@ -35,7 +43,13 @@ class BlogSpider(scrapy.spiders.SitemapSpider):
     def _get_author_from_author_string(text):
         """Get author name from 'By Author Name on xx/xx/xx'"""
 
-        return re.search(r"By (.*) on", text).group(1)
+        return re.search(r"By (.*) on", text).group(1).strip()
+    
+    @staticmethod
+    def _get_date_from_author_string(text):
+        """Get date from 'By Author Name on xx/xx/xx'"""
+
+        return re.search(r"By (?:.*) on (.*)", text).group(1).strip()
 
 class JournalSpider(scrapy.Spider):
     name = 'journal'
