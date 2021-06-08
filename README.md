@@ -2,6 +2,13 @@
 
 Simple python scraper using [scrapy](https://scrapy.org/) to get text and metadata from the SMG [blog](https://blog.sciencemuseum.org.uk/) and [journal](http://journal.sciencemuseum.ac.uk/).
 
+**Contents:**
+- [Running](#running)
+- [Data Formats](#data-formats)
+  - [Blog](#blog)
+  - [Journal](#journal)
+
+
 ## Running 
 
 The only requirement is `scrapy`. All data is stored in *./output_data*. 
