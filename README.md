@@ -27,6 +27,12 @@ The only requirement is `scrapy`. All data is stored in *./output_data*.
 | `tags` | Bottom of the page, following '*TAGGED*'. | *["design", "history of medicine", "medicine galleries"]*
 | `text_by_paragraph` | Main article text split into paragraphs. | *["As expected, the year 2020 has presented the opportunity for attention-grabbing puns relating to vision. The term \u201920-20 vision\u2019 is used in ophthalmological circles to express visual acuity, a person with perfect vision can read an eye-test chart from a distance of 20 feet.", "However, metaphorically, the phrase has come to mean having focus and clarity but this meaning is often regarded as offensive and \u201cableist\u201d to people with visual impairment.", "It was this, the recently renewed gratitude for the NHS and the anniversary of its creation that led me to reflect on how my historical research on NHS glasses has inspired my current mission to support innovation in disability-related design.", ...]*
 
+There are also the following fields under `links`, which contain URLs of SMG blog posts, collection site pages and Wikipedia pages that are linked to from blog posts.
+
+* `to_collection`: links to SMG collection (collection.sciencemuseum.org.uk or collection.sciencemuseumgroup.org.uk)
+* `to_blog`: links to other blog posts (blog.sciencemuseum.org.uk, excludes category, tag and author pages)
+* `to_wikipedia`: links to any page on wikipedia.org
+
 ### Journal
 
 | field name      | description | example |
