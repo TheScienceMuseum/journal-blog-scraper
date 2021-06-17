@@ -4,12 +4,18 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import SitemapSpider
 from w3lib.html import remove_tags
 
-collection_site_link_extractor = LinkExtractor(allow_domains=["collection.sciencemuseum.org.uk", "collection.sciencemuseumgroup.org.uk"])
+collection_site_link_extractor = LinkExtractor(
+    allow_domains=["collection.sciencemuseum.org.uk", "collection.sciencemuseumgroup.org.uk"],
+    deny=["https://collection.sciencemuseum.org.uk/$", "https://collection.sciencemuseumgroup.org.uk/$", "https://collection.sciencemuseum.org.uk/search.*", "https://collection.sciencemuseumgroup.org.uk/search.*"]
+)
 smg_blog_link_extractor = LinkExtractor(
     allow_domains=["blog.sciencemuseum.org.uk"], 
     deny=["^https://blog.sciencemuseum.org.uk/$", "https://blog.sciencemuseum.org.uk/tag/.*", "https://blog.sciencemuseum.org.uk/category/.*", "https://blog.sciencemuseum.org.uk/author/.*"]
 )
-wikipedia_link_extractor = LinkExtractor(allow_domains=["wikipedia.org"])
+wikipedia_link_extractor = LinkExtractor(
+    allow_domains=["wikipedia.org"],
+    deny=['https://en.wikipedia.org/wiki/Main_Page', 'https://en.wikipedia.org/$']
+)
 
 class BlogSpider(SitemapSpider):
     name = 'blog'
