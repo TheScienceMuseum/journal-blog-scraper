@@ -48,10 +48,10 @@ class BlogSpider(SitemapSpider):
 
     @staticmethod
     def _get_text_from_paragraph(p):
-        return '\n'.join(
-                     line.strip()
-                     for line in p.xpath('.//text()').extract()
-                     if line.strip()
+        return ''.join(
+                    line
+                    for line in p.xpath('.//text()').extract()
+                    if line.strip()
                  )
 
     @staticmethod
