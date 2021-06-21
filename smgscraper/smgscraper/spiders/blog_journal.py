@@ -6,7 +6,7 @@ from w3lib.html import remove_tags
 
 collection_site_link_extractor = LinkExtractor(
     allow_domains=["collection.sciencemuseum.org.uk", "collection.sciencemuseumgroup.org.uk"],
-    deny=["https://collection.sciencemuseum.org.uk/$", "https://collection.sciencemuseumgroup.org.uk/$", "https://collection.sciencemuseum.org.uk/search.*", "https://collection.sciencemuseumgroup.org.uk/search.*"]
+    allow=["https://collection.sciencemuseumgroup.org.uk/documents/.*", "https://collection.sciencemuseumgroup.org.uk/people/.*", "https://collection.sciencemuseumgroup.org.uk/objects/.*"],
 )
 smg_blog_link_extractor = LinkExtractor(
     allow_domains=["blog.sciencemuseum.org.uk"], 
