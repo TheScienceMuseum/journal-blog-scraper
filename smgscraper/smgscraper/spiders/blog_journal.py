@@ -10,7 +10,7 @@ collection_site_link_extractor = LinkExtractor(
 )
 smg_blog_link_extractor = LinkExtractor(
     allow_domains=["blog.sciencemuseum.org.uk"], 
-    deny=["^https://blog.sciencemuseum.org.uk/$", "https://blog.sciencemuseum.org.uk/tag/.*", "https://blog.sciencemuseum.org.uk/category/.*", "https://blog.sciencemuseum.org.uk/author/.*"]
+    deny=["^https://blog.sciencemuseum.org.uk/$", "https://blog.sciencemuseum.org.uk/tag/.*", "https://blog.sciencemuseum.org.uk/category/.*", "https://blog.sciencemuseum.org.uk/author/.*", "https://blog.sciencemuseum.org.uk/trace.*"]
 )
 wikipedia_link_extractor = LinkExtractor(
     allow_domains=["wikipedia.org"],
