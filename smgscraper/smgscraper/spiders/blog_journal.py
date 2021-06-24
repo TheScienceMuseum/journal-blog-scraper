@@ -96,7 +96,8 @@ class JournalSpider(scrapy.Spider):
             "keywords": self._get_keywords_from_article(response),
             "tags": [remove_tags(i).replace(r"\\r\\n", "").strip() for i in response.css('ul.tag-cloud li').getall()],
             # last element contains DOI
-            "text_by_paragraph": [remove_tags(i) for i in response.xpath('//div[@id="text-1"]/p').extract()][:-1]
+            "abstract": self._get_abstract_from_article(response),
+            "text_by_paragraph": self._get_text_from_article(response)
         }
     
     @staticmethod
@@ -110,3 +111,23 @@ class JournalSpider(scrapy.Spider):
 
         except:
             return []        
+    
+    @staticmethod
+    def _get_abstract_from_article(response):
+        """Get abstract if there is one, otherwise return None"""
+        abstract_text = response.xpath('//section[@id="abstract"]/p').extract()
+
+        if abstract_text:
+            return remove_tags(" ".join([i for i in abstract_text if "Component DOI:" not in i]))
+        else:
+            return None
+
+    @staticmethod
+    def _get_text_from_article(response):
+        """Combines introduction and main-body sections, stripping out tags and 'Component DOI' paragraphs"""
+        intro_text_by_paragraph = [remove_tags(i) for i in response.xpath('//section[@id="introduction"]/p').extract()]
+        main_text_by_paragraph = [remove_tags(i) for i in response.xpath('//section[@id="main-body"]/div/p').extract()]
+        main_text_by_paragraph = [i for i in main_text_by_paragraph if "Component DOI:" not in i]
+
+        return intro_text_by_paragraph + main_text_by_paragraph
+
