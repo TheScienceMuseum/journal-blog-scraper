@@ -97,7 +97,8 @@ class JournalSpider(scrapy.Spider):
             "tags": [remove_tags(i).replace(r"\\r\\n", "").strip() for i in response.css('ul.tag-cloud li').getall()],
             # last element contains DOI
             "abstract": self._get_abstract_from_article(response),
-            "text_by_paragraph": self._get_text_from_article(response)
+            "text_by_paragraph": self._get_text_from_article(response),
+            "figure_captions": self._get_figure_captions_from_article(response)
         }
     
     @staticmethod
@@ -130,4 +131,12 @@ class JournalSpider(scrapy.Spider):
         main_text_by_paragraph = [i for i in main_text_by_paragraph if "Component DOI:" not in i]
 
         return intro_text_by_paragraph + main_text_by_paragraph
+    
+    @staticmethod
+    def _get_figure_captions_from_article(response):
+        """Get first paragraph from sections with class 'article-figure'."""
+
+        captions = [remove_tags(i) for i in response.xpath('//section[@class="article-figure"]/p').extract()]
+
+        return [i for i in captions if not i.startswith("\r\n")]
 
